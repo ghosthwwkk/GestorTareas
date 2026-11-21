@@ -64,3 +64,32 @@ fn agregar_tarea(tareas: &mut Vec<Tarea>) {
 
     println!("Tarea agregada correctamente!!");
 }
+
+
+/*
+ LISTAR TAREAS
+*/
+
+
+/// Funcion que muestra por consola todas las tareas registradas con su numero y estado, si la lista está vacía, avisa al usuario y termina...
+fn listar_tareas(tareas: &[Tarea]) {
+
+    println!("\n LISTA DE TAREAS ");
+
+    //Comprobamos si es que el vector esta vacio si no hay tareas guardadas, avisamos y salimos de la funcion
+    if tareas.is_empty() {
+        println!("No hay tareas registradas");
+        return;
+    }
+
+    // Recorremos el slice de tareas obteniendo la posicion y cada elemento!
+    for (indice, tarea) in tareas.iter().enumerate() {
+
+        // Determinamos el estado de la tarea, el booleano ahora es un texto 
+        let estado = if tarea.completada { "Completada"} else {"Pendiente"};
+
+        // Mostramos el numero, descripcion y el estado sumamos 1 para que el usuario entienda la numeracion
+        println!("{}. {} | Estado: {}", indice + 1, tarea.descripcion, estado);
+    }
+} 
+
