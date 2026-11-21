@@ -151,3 +151,56 @@ fn completar_tarea(tareas: &mut Vec<Tarea>) {
         }
     }
 }
+
+
+
+/* 
+PROGRAMA PRINCIPAL MAIN MAIN
+*/
+
+
+/// Es el punto de entrada del programa e inicializa la lista de tareas en memoria y  mantiene activo el menú interactivo hasta que el usuario decida salir
+fn main() {
+
+    //Creamos un vector mutable para almacenar las tareas durante la ejecucion 
+    let mut tareas: Vec<Tarea> = Vec::new();
+
+    // El menu se ejecuta repetidamente con bucle infinito para que quede activo 
+    loop {
+
+        println!("\n                                                   ");
+        println!(" GESTOR DE TAREAS!-");
+        println!("");
+        println!("1. Agregar tarea");
+        println!("2. Listar tareas");
+        println!("3. Completar tarea");
+        println!("4. Salir");
+        println!("                                                        ");
+
+        // Solicitamos una opción al usuario
+        let opcion = leer_texto("Seleccione una opcion: ");
+
+        // Evaluamos la opción seleccionada, convertimos la entrada para compararla de forma limpia
+        match opcion.as_str() {
+
+            // Opción 1: agregar una tarea.
+            "1" => {
+                agregar_tarea(&mut tareas);
+            }
+
+            // Opción 2: mostrar todas las tareas
+            "2" => {listar_tareas(&tareas);}
+
+            // Opción 3: completar una tarea
+            "3" => {completar_tarea(&mut tareas);}
+
+            // Opción 4: finalizar el programa
+            "4" => { println!("\nGracias por utilizar es gestor de tareas!!!");
+                break; // sale del loop
+            }
+
+            // Cualquier otra entrada es inválida que no sea los del match
+            _ => {println!("Opcion no valida. Intente nuevamente!");}
+        }
+    }
+}
