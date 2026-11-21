@@ -93,3 +93,61 @@ fn listar_tareas(tareas: &[Tarea]) {
     }
 } 
 
+
+
+/*
+COMPLETAR TAREAS
+*/
+
+
+///Funcion q muestra las tareas disponibles y le pide al usuario un número valido  para marcar la tarea seleccionada como completada 
+fn completar_tarea(tareas: &mut Vec<Tarea>) {
+
+    println!("\n COMPLETAR TAREA ");
+
+    // Verificamos si existen tareas ya que si la lista esta vacía, avisamos y salimos para no pedir datos innecesarios
+    if tareas.is_empty() {
+        println!("No hay tareas para completar");
+        return;
+    }
+
+    // Mostramos las tareas disponibles y reutilizamos listar_tareas para que el usuario vea los numeros disponibles 
+    listar_tareas(tareas);
+
+    // Solicitamos el número de la tarea
+    let entrada = leer_texto("\nIngrese el numero de la tarea: ");
+
+    // Convertimos el texto a un número, Intentamos convertir el texto ingresado a un entero sin signo
+    let numero: usize = match entrada.parse() {
+
+        // Si la conversión funciona guardamos el número
+        Ok(valor) => valor,
+
+        // Si falla mostramos un mensaje y salimos
+        Err(_) => {
+            println!("Debe ingresar un numero valido !");
+            return;
+        }
+    };
+
+    // Verificamos que el numero sea mayor que cero con esto evitamos que numero - 1 provoque un error de desbordamiento
+    if numero == 0 {
+        println!("Numero de tarea no valido X");
+        return;
+    }
+
+    // Buscamos una referencia mutable a la tarea (restamos 1 porque el índice empieza en 0 para legibilidad )
+    match tareas.get_mut(numero - 1) {
+
+        // Si encontramos la tarea, modificamos su estado!
+        Some(tarea) => {
+            tarea.completada = true;
+            println!("Tarea completada correctamente");
+        }
+
+        // Si no existe, mostramos un mensaje....
+        None => {
+            println!("No existe una tarea con ese numero!");
+        }
+    }
+}
